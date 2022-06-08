@@ -1,0 +1,13 @@
+<component name="libraryTable">
+  <library name="Maven: org.apache.kafka:kafka-clients:6.1.0-ccs-SNAPSHOT">
+    <CLASSES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-clients/6.1.0-ccs-SNAPSHOT/kafka-clients-6.1.0-ccs-20200807.174218-68.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-clients/6.1.0-ccs-SNAPSHOT/kafka-clients-6.1.0-ccs-20200807.174218-68-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$MAVEN_REPOSITORY$/org/apache/kafka/kafka-clients/6.1.0-ccs-SNAPSHOT/kafka-clients-6.1.0-ccs-20200807.174218-68-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>
