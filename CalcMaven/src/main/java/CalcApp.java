@@ -1,6 +1,4 @@
 import io.confluent.rest.Application;
-import io.confluent.rest.RestConfig;
-import io.confluent.rest.RestConfigException;
 import io.confluent.rest.entities.ErrorMessage;
 import java.util.HashMap;
 import javax.ws.rs.core.Configurable;
@@ -11,7 +9,6 @@ import org.eclipse.jetty.security.AbstractLoginService;
 import org.eclipse.jetty.security.ConstraintMapping;
 import org.eclipse.jetty.security.IdentityService;
 import org.eclipse.jetty.security.LoginService;
-import org.eclipse.jetty.server.Authentication.User;
 import org.eclipse.jetty.util.security.Constraint;
 import org.eclipse.jetty.util.security.Password;
 import org.slf4j.Logger;
@@ -33,11 +30,8 @@ public class CalcApp extends Application<CalcConfig>{
       app.start();
       log.info("Server started and listening on port " + app.server.getURI());
       app.join();
-    } catch (RestConfigException e) {
-      log.error("Server failed on creation: " + e.getMessage());
-      System.exit(1);
     } catch (Exception e){
-      log.error("Server died: " + e.getMessage());
+      log.error("Server failure: " + e.getMessage());
       System.exit(1);
       throw new RuntimeException(e);
     }
@@ -48,17 +42,14 @@ public class CalcApp extends Application<CalcConfig>{
   public void setupResources(Configurable<?> configurable, CalcConfig calcConfig) {
     configurable.register(new CalcResources());
 
-    ExceptionMapper mapper = new ExceptionMapper<Exception>() {
-      @Override
-      public Response toResponse(Exception e) {
-        e.printStackTrace();
+    ExceptionMapper<Exception> mapper = e -> {
+      e.printStackTrace();
 
-        int badRequestStatusCode = Status.BAD_REQUEST.getStatusCode();
-        return Response.status(badRequestStatusCode)
-            .entity(new ErrorMessage(badRequestStatusCode, e.getMessage()))
-            .build();
+      int badRequestStatusCode = Status.BAD_REQUEST.getStatusCode();
+      return Response.status(badRequestStatusCode)
+          .entity(new ErrorMessage(badRequestStatusCode, e.getMessage()))
+          .build();
 
-      }
     };
 
     configurable.register(mapper);
